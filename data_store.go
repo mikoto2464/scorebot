@@ -115,7 +115,13 @@ func opWrite(userKey string, data map[string]any) {
 func opDelete(userKey string) { dataStore.DeleteUser(userKey) }
 
 func opViewTeacher(school string) map[string]any   { return dataStore.ViewTeacher(school) }
-func opViewTeacherQT(school string) map[string]any { return dataStore.ViewTeacherQT(school) }
+func opViewTeacherQT(school string) map[string]any {
+	result := dataStore.ViewTeacherQT(school)
+	if result["Return"] == true {
+		result["school"] = "QT-" + school
+	}
+	return result
+}
 func opWriteTeacher(school string, data map[string]any) {
 	dataStore.WriteTeacher(school, data)
 }

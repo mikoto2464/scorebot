@@ -1021,7 +1021,6 @@ func renderQTExamList(exams []map[string]any, notes []string) string {
 	}
 	shortIDs := buildQTExamShortIDs(exams)
 	lines := make([]string, 0, len(exams)+len(notes)+2)
-	lines = append(lines, "* 七天网络相关功能正在测试中，若有问题还请谅解。")
 	lines = append(lines, "【七天网络考试列表】")
 	lines = append(lines, "考试ID ✱ 考试名称(时间)")
 	for _, exam := range exams {
