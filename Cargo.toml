@@ -9,3 +9,6 @@ sqlx = { version = "0.8.6", features = ["runtime-tokio-rustls", "sqlite", "macro
 dotenvy = "0.15.7"
 tracing = "0.1.44"
 tracing-subscriber = "0.3.23"
+interprocess = { version = "2.4.2", features = ["tokio"] }
+scorebot-common = { path = "scorebot-common" }
+anyhow = "1.0.102"
