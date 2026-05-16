@@ -1,5 +1,5 @@
 [package]
-name = "scorebot-mq"
+name = "scorebot-frontend"
 version = "0.1.0"
 edition = "2024"
 
