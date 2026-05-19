@@ -7,10 +7,6 @@ use tokio::select;
 use tokio::sync::{mpsc, watch};
 use tracing::{error, info};
 
-pub trait Sender: Sync + Send {
-    async fn send(&self, message: Message);
-}
-
 #[derive(Clone)]
 pub struct QueueCacheSender {
     tx: mpsc::Sender<Message>,
@@ -58,8 +54,8 @@ impl QueueCacheSender {
                     maybe_msg = rx.recv() => {
                         if let Some(msg) = maybe_msg {
                             if let Some(ref mut stream) = active_stream {
-                                let payload = bincode::serialize(&msg);
-                                stream.write_all(payload).await?;
+                                let payload = rkyv::to_bytes::<Message>(&msg)?;
+                                stream.write_all(&payload).await?;
                             } else {
                                 break;
                             }
