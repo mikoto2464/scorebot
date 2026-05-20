@@ -18,7 +18,7 @@ pub struct QueueCacheSender {
 impl QueueCacheSender {
     pub fn new() -> Self {
         let (tx, rx) = mpsc::channel::<Message>(1000);
-        let (ctrl_tx, ctrl_rx) = watch::channel(true);
+        let (ctrl_tx, ctrl_rx) = watch::channel(false);
 
         let sender = Self { tx, ctrl_tx };
 
@@ -101,5 +101,13 @@ impl QueueCacheSender {
 
     pub async fn send(&self, message: Message) {
         self.tx.send(message).await.unwrap();
+    }
+
+    pub async fn stop(&self) {
+        self.ctrl_tx.send(false).expect("Failed to send stop signal");
+    }
+
+    pub async fn start(&self) {
+        self.ctrl_tx.send(true).expect("Failed to send start signal");
     }
 }
