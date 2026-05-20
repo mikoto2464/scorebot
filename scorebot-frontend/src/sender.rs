@@ -31,7 +31,7 @@ impl QueueCacheSender {
         tokio::task::spawn(async move {
             let mut active_stream: Option<LocalSocketStream> = None;
             loop {
-                let is_running = *ctrl_rx.borrow();
+                let is_running = { *ctrl_rx.borrow() };
 
                 if !is_running {
                     if active_stream.take().is_some() {
@@ -92,7 +92,7 @@ impl QueueCacheSender {
                             active_stream = None;
                         }
                     }
-                    _ = ctrl_rx.changed() => { continue; }
+                    _ = ctrl_rx.changed() => {}
                 }
             }
             info!("Worker exited");
